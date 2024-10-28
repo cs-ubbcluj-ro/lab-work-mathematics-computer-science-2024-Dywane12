@@ -1,0 +1,19 @@
+Sum of first N numbers:
+
+clatite
+    define n : num;
+    define total : num;
+    define counter : num;
+    begin
+        read(n);
+        total := 0;
+        counter := 1;
+
+        loop counter <= n perform
+            total := total + counter;
+            counter := counter + 1;
+        endloop
+
+        write(total);
+    end
+cu nutella

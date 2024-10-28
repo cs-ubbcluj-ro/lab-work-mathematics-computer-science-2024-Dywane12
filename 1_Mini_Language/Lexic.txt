@@ -1,0 +1,47 @@
+Alphabet
+
+- Letters: Capital and lowercase English letters (A-Z, a-z) <letter>
+- Digits: 0-9
+- Special Character: underscore _
+
+Operators
+- Arithmetic Operators: +, -, *, /
+- Assignment Operator: :=
+- Relational Operators: <, <=, =, >=, >, <>
+
+Separators
+- Brackets and braces: [, ], {, }
+- Punctuation: :, ;, ,
+- Whitespace: space
+
+Reserved Words
+- Data Types: num, decimal, structure
+- Control Structures: check, then, otherwise, loop, perform, read, write, begin, end, define
+
+Identifiers
+- Must start with a letter and can include letters, digits, and underscores.
+- Syntax: identifier ::= letter { letter | digit | "_" }
+- Examples: data_item, sum_total, val2
+
+Constants
+-> Integer:
+
+- May start with an optional sign (+ or -) followed by a non-zero digit.
+- <digit> ::= 0 | ... | 9
+- <non-zero-digit> ::= 1 | ... | 9
+- Syntax: <integer> ::= ["+" | "-"] <non-zero-digit> { <digit> }
+- Examples: 42, -7, +56
+
+-> Float:
+
+- Composed of an integer part, followed by a decimal point, and at least one digit.
+- Syntax: <float> ::= <integer> "." <digit> { <digit> }
+- Examples: 3.14, -0.56, +10.0
+
+-> String:
+
+- Enclosed in single quotes and can include letters, digits, whitespace, and select symbols.
+- Syntax: <string> ::= "'" { <char> } "'"
+- <char> ::= <letter> | <digit> | <special_symbols>
+- Allowed Characters: Alphanumeric characters and special symbols !, ?, ., -, _
+- Example: 'Hello, world!', 'Value_123!'

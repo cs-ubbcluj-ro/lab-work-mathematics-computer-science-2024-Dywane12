@@ -1,0 +1,62 @@
+Program Structure:
+
+program ::= "clatite" decllist mainstmt "cu nutella"
+
+
+Declarations:
+
+decllist ::= declaration ";" decllist | declaration
+declaration ::= "define" identifier ":" type
+type ::= "num" | "decimal" | "string" | structdecl
+structdecl ::= "structure" "{" decllist "}"
+
+
+Main Statements:
+
+mainstmt ::= "begin" stmtlist "end"
+stmtlist ::= stmt ";" stmtlist | stmt
+
+
+Statements:
+
+stmt ::= assignstmt | iostmt | ifstmt | loopstmt
+
+
+1. Assignment Statement:
+
+assignstmt ::= identifier ":=" expression
+
+2. Input/Output Statements:
+
+iostmt ::= "read" "(" identifier ")" | "write" "(" identifier ")"
+
+3. Conditional Statement
+
+ifstmt ::= "check" condition "then" stmtlist ["otherwise" stmtlist]
+
+4. Loop Statement
+
+loopstmt ::= "loop" condition "perform" stmtlist
+
+
+Expressions:
+
+expression ::= term {("+" | "-") term}
+term ::= factor {("*" | "/") factor}
+factor ::= identifier | integer | float | "(" expression ")"
+
+
+Special Expression: Sum of Two Numbers:
+
+sumoftwonumbers ::= identifier "+" identifier
+
+
+Conditions:
+
+condition ::= expression relop expression
+relop ::= "<" | "<=" | "=" | ">=" | ">" | "<>"
+
+
+Identifiers:
+
+identifier ::= letter { letter | digit | "_" }
