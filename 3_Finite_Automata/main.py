@@ -3,6 +3,7 @@ class FiniteAutomaton:
         self.states = set()
         self.alphabet = set()
         self.transitions = {}
+        self.initial_state = None
         self.final_states = set()
         self.load_fa(filename)
 
@@ -18,7 +19,7 @@ class FiniteAutomaton:
 
         # Parse Transitions
         self.transitions = {}
-        transitions_section = lines[3:-1]
+        transitions_section = lines[3:-2]  # Adjust to accommodate InitialState
         for transition in transitions_section:
             parts = transition.strip().split("->")
             source, symbol = parts[0].split(",")
@@ -26,6 +27,9 @@ class FiniteAutomaton:
             if (source, symbol) not in self.transitions:
                 self.transitions[(source, symbol)] = []
             self.transitions[(source, symbol)].append(destination)
+
+        # Parse Initial State
+        self.initial_state = lines[-2].strip().split(":")[1]
 
         # Parse Final States
         self.final_states = set(lines[-1].strip().split(":")[1].split(","))
@@ -37,6 +41,7 @@ class FiniteAutomaton:
         for (source, symbol), destinations in self.transitions.items():
             for dest in destinations:
                 print(f"  {source}, {symbol} -> {dest}")
+        print("Initial State:", self.initial_state)
         print("Final States:", self.final_states)
 
 
