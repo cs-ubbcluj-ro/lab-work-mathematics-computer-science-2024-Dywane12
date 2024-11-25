@@ -4,6 +4,7 @@ finite_automaton =
     "States:" states_list "\n"
     "Alphabet:" alphabet_list "\n"
     "Transitions:\n" transitions_list "\n"
+    "InitialState:" state "\n"
     "FinalStates:" final_states_list "\n" ;
 
 states_list = state { "," state } ;
@@ -61,3 +62,13 @@ Final States
     FinalStates: q3
 - Explanation: State q3 is the only accepting state.
     The automaton accepts an input if it ends in this state after processing the input string.
+
+Initial State
+
+- Definition: The starting state of the automaton.
+- Format: A single state name following the keyword InitialState:.
+- Example from FA.in:
+    InitialState: q0
+- Explanation:
+    The automaton starts in state q0.
+    This state is used as the entry point for processing inputs.
