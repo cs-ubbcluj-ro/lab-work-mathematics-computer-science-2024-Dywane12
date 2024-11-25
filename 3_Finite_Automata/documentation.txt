@@ -1,0 +1,63 @@
+EBNF Definition:
+
+finite_automaton =
+    "States:" states_list "\n"
+    "Alphabet:" alphabet_list "\n"
+    "Transitions:\n" transitions_list "\n"
+    "FinalStates:" final_states_list "\n" ;
+
+states_list = state { "," state } ;
+state = letter { letter | digit } ;
+
+alphabet_list = symbol { "," symbol } ;
+symbol = letter ;
+
+transitions_list = transition { "\n" transition } ;
+transition = state "," symbol "->" state ;
+
+final_states_list = state { "," state } ;
+
+
+Explanation of Components:
+
+States
+
+- Definition: A list of all states in the automaton.
+- Format: A comma-separated list of state names following the keyword States:
+- Example from FA.in:
+    States: q0,q1,q2,q3
+- Explanation: The automaton has four states: q0, q1, q2, and q3.
+    Each state is uniquely identified.
+
+Alphabet
+
+- Definition: A list of all symbols in the automaton's alphabet.
+- Format: A comma-separated list of symbols following the keyword Alphabet:.
+- Example from FA.in:
+    Alphabet: a,b
+- Explanation: The automaton processes two input symbols: a and b.
+
+Transitions
+
+- Definition: A list of rules defining the transitions between states based on input symbols.
+- Format: One transition per line after the keyword Transitions:. Each transition is in the form state,symbol->state.
+- Example from FA.in:
+    Transitions:
+    q0,a->q1
+    q1,b->q2
+    q2,a->q3
+    q3,b->q0
+- Explanation:
+    When in state q0 and the input is a, the automaton transitions to state q1.
+    When in state q1 and the input is b, the automaton transitions to state q2.
+    When in state q2 and the input is a, the automaton transitions to state q3.
+    When in state q3 and the input is b, the automaton transitions back to state q0.
+
+Final States
+
+- Definition: A list of all final or accepting states in the automaton.
+- Format: A comma-separated list of state names following the keyword FinalStates:.
+- Example from FA.in:
+    FinalStates: q3
+- Explanation: State q3 is the only accepting state.
+    The automaton accepts an input if it ends in this state after processing the input string.
