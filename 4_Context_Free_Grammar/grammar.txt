@@ -1,0 +1,87 @@
+# Grammar for the minilanguage
+
+S = <program>
+
+# Non-terminals
+N = {
+    <program>, <decllist>, <declaration>, <type>, <structdecl>, 
+    <mainstmt>, <stmtlist>, <stmt>, <assignstmt>, <iostmt>, <ifstmt>, 
+    <loopstmt>, <expression>, <term>, <factor>, <sumoftwonumbers>, 
+    <condition>, <relop>, <identifier>, <integer>, <float>, <string>, 
+    <float_tail>, <integer_tail>, <string_content>, <identifier_tail>,
+    <expression_tail>
+}
+
+# Terminals
+T = {
+    "clatite", "cu nutella", "define", "num", "decimal", "string", "structure",
+    "begin", "end", "read", "write", "check", "then", "otherwise", "loop",
+    "perform", ":=", "+", "-", "*", "/", "(", ")", "{", "}", ";", ",", ":", 
+    "<", "<=", "=", ">=", ">", "<>", "letter", "digit", "_", " "
+}
+
+# Grammar Rules (P)
+P = {
+
+    # Program structure
+    <program> ::= "clatite" <decllist> <mainstmt> "cu nutella"
+    
+    # Declarations
+    <decllist> ::= <declaration> ";" <decllist>
+                 | <declaration>
+    <declaration> ::= "define" <identifier> ":" <type>
+    <type> ::= "num" | "decimal" | "string" | <structdecl>
+    <structdecl> ::= "structure" "{" <decllist> "}"
+
+    # Main statements
+    <mainstmt> ::= "begin" <stmtlist> "end"
+    <stmtlist> ::= <stmt> ";" <stmtlist> | <stmt>
+    
+    # Statements
+    <stmt> ::= <assignstmt> | <iostmt> | <ifstmt> | <loopstmt>
+
+    # Assignment statement
+    <assignstmt> ::= <identifier> ":=" <expression>
+
+    # Input/Output statements
+    <iostmt> ::= "read" "(" <identifier> ")" | "write" "(" <identifier> ")"
+
+    # Conditional statement
+    <ifstmt> ::= "check" <condition> "then" <stmtlist> | "check" <condition> "then" <stmtlist> "otherwise" <stmtlist>
+
+    # Loop statement
+    <loopstmt> ::= "loop" <condition> "perform" <stmtlist>
+
+    # Expressions
+    <expression> ::= <term> <expression_tail>
+    <expression_tail> ::= "+" <term> <expression_tail> | "-" <term> <expression_tail>
+    <term> ::= <factor> <term_tail>
+    <term_tail> ::= "*" <factor> <term_tail> | "/" <factor> <term_tail>
+    <factor> ::= <identifier> | <integer> | <float> | "(" <expression> ")"
+
+    # Special Expression: Sum of Two Numbers
+    <sumoftwonumbers> ::= <identifier> "+" <identifier>
+
+    # Conditions
+    <condition> ::= <expression> <relop> <expression>
+    <relop> ::= "<" | "<=" | "=" | ">=" | ">" | "<>"
+
+    # Identifiers
+    <identifier> ::= <letter> <identifier_tail>
+    <identifier_tail> ::= <letter> <identifier_tail> | <digit> <identifier_tail> | "_" <identifier_tail>
+
+    # Literals
+    <integer> ::= <sign> <digit> <integer_tail>
+    <integer_tail> ::= <digit> <integer_tail>
+    <sign> ::= "+" | "-"
+    <float> ::= <integer> "." <digit> <float_tail>
+    <float_tail> ::= <digit> <float_tail>
+    <string> ::= "'" <string_content> "'"
+    <string_content> ::= <char> <string_content>
+
+    # Alphabet
+    <letter> ::= "a" | "b" | ... | "z" | "A" | "B" | ... | "Z"
+    <digit> ::= "0" | "1" | ... | "9"
+    <char> ::= <letter> | <digit> | " " | "+" | "-" | "*" | "/" | "_"
+
+}
