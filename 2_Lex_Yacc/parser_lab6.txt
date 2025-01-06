@@ -1,0 +1,129 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+extern int yylineno; // Line number from lex
+extern char *yytext; // Text of the current token
+
+void yyerror(const char *msg);
+int yylex(void);
+
+%}
+
+%union {
+    int intval;
+    float floatval;
+    char *strval;
+}
+
+%token <strval> IDENTIFIER STRING
+%token <intval> INTEGER
+%token <floatval> FLOAT
+%token CLATITE DEFINE BEGIN END CU NUTELLA NUM DECIMAL STRING_TYPE STRUCTURE CHECK THEN OTHERWISE LOOP PERFORM READ WRITE
+%token ASSIGN PLUS MINUS MULT DIV LT LE EQ GE GT NE
+%token SEMICOLON COLON COMMA LBRACE RBRACE LBRACKET RBRACKET
+
+%%
+
+program:
+    CLATITE decllist mainstmt CU NUTELLA { printf("Program parsed successfully.\n"); }
+    ;
+
+decllist:
+    declaration SEMICOLON decllist
+    | declaration
+    ;
+
+declaration:
+    DEFINE IDENTIFIER COLON type
+    ;
+
+type:
+    NUM
+    | DECIMAL
+    | STRING_TYPE
+    | STRUCTURE LBRACE decllist RBRACE
+    ;
+
+mainstmt:
+    BEGIN stmtlist END
+    ;
+
+stmtlist:
+    stmt SEMICOLON stmtlist
+    | stmt
+    ;
+
+stmt:
+    assignstmt
+    | iostmt
+    | ifstmt
+    | loopstmt
+    ;
+
+assignstmt:
+    IDENTIFIER ASSIGN expression
+    ;
+
+iostmt:
+    READ LBRACKET IDENTIFIER RBRACKET
+    | WRITE LBRACKET IDENTIFIER RBRACKET
+    ;
+
+ifstmt:
+    CHECK condition THEN stmtlist OTHERWISE stmtlist
+    | CHECK condition THEN stmtlist
+    ;
+
+loopstmt:
+    LOOP condition PERFORM stmtlist
+    ;
+
+expression:
+    term
+    | expression PLUS term
+    | expression MINUS term
+    ;
+
+term:
+    factor
+    | term MULT factor
+    | term DIV factor
+    ;
+
+factor:
+    IDENTIFIER
+    | INTEGER
+    | FLOAT
+    | LBRACKET expression RBRACKET
+    ;
+
+condition:
+    expression relop expression
+    ;
+
+relop:
+    LT
+    | LE
+    | EQ
+    | GE
+    | GT
+    | NE
+    ;
+
+%%
+
+// Error handling
+void yyerror(const char *msg) {
+    fprintf(stderr, "Error: %s at line %d, near '%s'\n", msg, yylineno, yytext);
+}
+
+int main() {
+    printf("Starting parsing...\n");
+    if (yyparse() == 0) {
+        printf("Parsing completed successfully.\n");
+    } else {
+        printf("Parsing failed.\n");
+    }
+    return 0;
+}
